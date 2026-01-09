@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "glue/**"
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -23,5 +24,4 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Upload Glue script to S3
-        run: |
-          aws s3 cp glue/etl.py s3://glue-script-bucket-vas/scripts/etl.py
+        run: aws s3 cp glue/etl.py s3://glue-script-bucket-vas/scripts/etl.py
