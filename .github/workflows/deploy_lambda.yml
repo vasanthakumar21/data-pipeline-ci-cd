@@ -2,12 +2,15 @@ name: Deploy Lambda
 
 on:
   push:
+    branches:
+      - main
     paths:
       - "lambda/**"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
