@@ -23,9 +23,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Zip lambda code (FIXED)
+      - name: Create lambda zip correctly
         run: |
-          zip -r function.zip lambda/lambda_function.py
+          cd lambda
+          zip -r ../function.zip lambda_function.py
+          cd ..
           ls -lh function.zip
 
       - name: Update lambda function code
