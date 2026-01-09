@@ -1,0 +1,29 @@
+name: Deploy Lambda
+
+on:
+  push:
+    paths:
+      - "lambda/**"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Zip lambda
+        run: |
+          cd lambda
+          zip function.zip lambda_function.py
+
+      - name: Deploy lambda
+        run: |
+          aws lambda update-function-code \
+            --function-name trigger-glue-job \
+            --zip-file fileb://lambda/function.zip
